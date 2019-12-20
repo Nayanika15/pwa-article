@@ -6,7 +6,7 @@
           <v-progress-circular primary indeterminate> </v-progress-circular>
         </v-overlay>
         <appHeader></appHeader>
-        <router-view></router-view>
+        <router-view />
         <appFooter></appFooter>
       </div>
     </v-app>

@@ -44,7 +44,7 @@
                         v-for="(category, id) in article.categories_tagged"
                         :key="id"
                       >
-                        {{ cattegory.name }}
+                        {{ category.title }}
                       </span>
                       &bullet;
                     </div>

@@ -40,7 +40,15 @@
               <router-link class="nav-link" to="/">Home</router-link>
             </li>
             <li class="nav-item dropdown" v-if="categories_count">
-              <div class="nav-link">Categories</div>
+              <a
+                class="nav-link dropdown-toggle"
+                href="category.html"
+                id="dropdown05"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+                >Categories</a
+              >
               <div class="dropdown-menu" aria-labelledby="dropdown05">
                 <router-link
                   class="dropdown-item"

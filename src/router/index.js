@@ -20,7 +20,7 @@ import ForgotPassword from "../components/common/PasswordReset.vue";
 export const routes = [
   {
     path: "/",
-    Component: Home,
+    component: Home,
     name: "home"
   },
   {

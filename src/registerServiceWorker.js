@@ -12,6 +12,16 @@ if (process.env.NODE_ENV === "production") {
     },
     registered() {
       console.log("Service worker has been registered.");
+
+      //request permission for notification
+      Notification.requestPermission(function(status) {
+        console.log(`Notification permission status:${status}`);
+        if (Notification.permission == "granted") {
+          alert("you have subscribed to notifications...");
+        } else {
+          alert("Push notifications not active.");
+        }
+      });
     },
     cached() {
       console.log("Content has been cached for offline use.");
@@ -32,3 +42,4 @@ if (process.env.NODE_ENV === "production") {
     }
   });
 }
+
