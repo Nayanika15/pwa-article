@@ -27,16 +27,16 @@
                   class="blog-entry "
                   data-animate-effect="fadeIn"
                 >
-                  <img :src="article.image" alt="Image placeholder" />
+                  <img :src="article.homepage_image" alt="Image placeholder" />
                   <div class="blog-content-body">
                     <div class="post-meta">
                       <span class="author mr-2"
                         ><img
                           src="assets/images/person_1.jpg"
-                          :alt="article.created_by"
-                        />{{ article.created_by }}</span
+                          :alt="article.added_by"
+                        />{{ article.added_by }}</span
                       >&bullet;
-                      <span class="mr-2">{{ article.created_date }}</span>
+                      <span class="mr-2">{{ article.date }}</span>
                       &bullet;
                       <span class="ml-2"
                         ><span class="fa fa-comments"></span>
@@ -78,13 +78,13 @@ export default {
       articles: [],
       resourse_url: "article/latest",
       options: {
-        remote_data: "result.articles.data",
-        remote_current_page: "result.articles.current_page",
-        remote_last_page: "result.articles.last_page",
-        remote_next_page_url: "result.articles.next_page_url",
-        remote_prev_page_url: "result.articles.prev_page_url",
-        next_button_text: "Go Next",
-        previous_button_text: "Go Back"
+        remote_data: 'result.data',
+      remote_current_page: 'result.current_page',
+      remote_last_page: 'result.last_page',
+      remote_next_page_url: 'result.next_page_url',
+      remote_prev_page_url: 'result.prev_page_url',
+      next_button_text: 'Go Next',
+      previous_button_text: 'Go Back'
       }
     };
   },
@@ -98,7 +98,12 @@ export default {
   },
   methods: {
     updateResource(data) {
-      this.articles = data;
+      const resArray = [];
+      const dataResult = data;
+      for (let key in dataResult) {
+        resArray.push(dataResult[key]);
+      }
+      this.articles = resArray;
     },
     fetchArticles() {
       this.$store.commit("loading", true);
@@ -109,9 +114,9 @@ export default {
         })
         .then(data => {
           this.$store.commit("loading", false);
-          if (data["result"].length) {
+          if (data.result.data.length) {
             const resArray = [];
-            const dataResult = data["result"];
+            const dataResult = data.result.data;
             for (let key in dataResult) {
               resArray.push(dataResult[key]);
             }
