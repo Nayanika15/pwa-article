@@ -71,7 +71,7 @@ export default {
   data() {
     return {
       search: "",
-      is_admin: localStorage.getItem("isAdmin"),
+      is_admin: this.$store.state.auth.is_admin,
       headers: [
         { text: "Id", value: "id" },
         { text: "Title", value: "title" },

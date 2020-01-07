@@ -18,7 +18,6 @@
                 v-for="(article, index) in articles"
                 :key="index"
               >
-                <!-- <a href="#" class="blog-entry " data-animate-effect="fadeIn"> -->
                 <router-link
                   :to="{
                     name: 'articleDetail',
@@ -27,7 +26,7 @@
                   class="blog-entry "
                   data-animate-effect="fadeIn"
                 >
-                  <img :src="article.homepage_image" alt="Image placeholder" />
+                  <img :src="article.homepage_image" alt="Image placeholder"/>
                   <div class="blog-content-body">
                     <div class="post-meta">
                       <span class="author mr-2"
