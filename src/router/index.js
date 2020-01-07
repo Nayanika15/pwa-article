@@ -1,21 +1,21 @@
 //import components
-import Home from "../components/Home.vue";
-import ArticleDetail from "../components/article/Detail.vue";
-import CategoryDetail from "../components/category/Detail.vue";
-import ContactUs from "../components/common/ContactUs.vue";
-import Login from "../components/Login.vue";
-import Register from "../components/Register.vue";
-import Dashboard from "../components/Dashboard.vue";
-import AddCategory from "../components/category/Add.vue";
-import ListCategory from "../components/category/List.vue";
-import ListArticles from "../components/article/List.vue";
-import AddArticle from "../components/article/Add.vue";
-import Pay from "../components/common/Pay.vue";
-import SuccessfulPayment from "../components/common/Successful-payment.vue";
-import UpdateCategory from "../components/category/Edit.vue";
-import EditArticle from "../components/article/Edit.vue";
-import ListComments from "../components/comment/List.vue";
-import ForgotPassword from "../components/common/PasswordReset.vue";
+import Home from "@/components/Home.vue";
+import ArticleDetail from "@/components/article/Detail.vue";
+import CategoryDetail from "@/components/category/Detail.vue";
+import ContactUs from "@/components/common/ContactUs.vue";
+import Login from "@/components/Login.vue";
+import Register from "@/components/Register.vue";
+import Dashboard from "@/components/Dashboard.vue";
+import AddCategory from "@/components/category/Add.vue";
+import ListCategory from "@/components/category/List.vue";
+import ListArticles from "@/components/article/List.vue";
+import AddArticle from "@/components/article/Add.vue";
+import Pay from "@/components/common/Pay.vue";
+import SuccessfulPayment from "@/components/common/Successful-payment.vue";
+import UpdateCategory from "@/components/category/Edit.vue";
+import EditArticle from "@/components/article/Edit.vue";
+import ForgotPassword from "@/components/common/PasswordReset.vue";
+import Comment from "@/components/comment/List.vue";
 
 export const routes = [
   {
@@ -25,7 +25,8 @@ export const routes = [
   },
   {
     path: "/home",
-    component: Home
+    component: Home,
+    name: "home"
   },
   {
     path: "/contact",
@@ -46,12 +47,18 @@ export const routes = [
     meta: { auth: true }
   },
   {
+    path: "/comment/list",
+    component: Comment,
+    name: "view-comments",
+    meta: { auth: true }
+  },
+  {
     path: "/category/:slug",
     component: CategoryDetail,
     name: "categoryDetail"
   },
   { path: "/login", component: Login, name: "login", meta: { guest: true } },
-  { path: "/register", component: Register, name: "register" },
+  { path: "/register", component: Register, name: "register", meta: { guest: true } },
   {
     path: "/dashboard",
     component: Dashboard,
@@ -87,7 +94,6 @@ export const routes = [
     name: "edit-article",
     meta: { auth: true }
   },
-  { path: "/comments/list", component: ListComments, name: "view-comments" },
   {
     path: "/password-reset",
     component: ForgotPassword,
@@ -96,6 +102,6 @@ export const routes = [
   },
   {
     path: "/auth/callback/:provider",
-    component: Dashboard
+    component: Home
   }
 ];

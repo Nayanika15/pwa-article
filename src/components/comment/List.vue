@@ -8,6 +8,7 @@
             <v-data-table
               :headers="headers"
               :items="comments"
+              :items-per-page="5"
               :search="search"
               loading
               loading-text="Loading... Please wait"
@@ -45,8 +46,8 @@ export default {
       headers: [
         { text: "Id", value: "id" },
         { text: "Comment", value: "comment" },
-        { text: "Added on", value: "created_date" },
-        { text: "Added by", value: "user_name" },
+        { text: "Added on", value: "date" },
+        { text: "Added by", value: "added_by" },
         { text: "Status", value: "approve_status" },
         { text: "Action", value: "action" }
       ],

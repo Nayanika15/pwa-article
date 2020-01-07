@@ -26,7 +26,7 @@
                   <div class="post-meta">
                     <span class="author mr-2"
                       ><img
-                        src="/src/assets/images/person_1.jpg"
+                        src="assets/images/person_1.jpg"
                         :alt="article.added_by"
                       />
                       {{ article.added_by }}</span

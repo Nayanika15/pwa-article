@@ -5,14 +5,17 @@
         <div class="row blog-entries ">
           <div class="col-md-12 col-lg-8 main-content">
             <div class="post-meta">
-              <span class="author mr-2"
-                ><img
-                  src="/src/assets/images/person_1.jpg"
+              <span class="author mr-2">
+                <img
+                  src="/assets/images/person_1.jpg"
                   :alt="article.added_by"
                   class="mr-2"
                 />
-                {{ article.added_by }}</span
-              >&bullet; <span class="mr-2"> {{ article.date }} </span> &bullet;
+                {{ article.added_by }}
+              </span>&bullet; 
+              
+              <span class="mr-2"> {{ article.date }} </span> &bullet;
+              
               <span class="ml-2"
                 ><span class="fa fa-comments"></span> {{ comments_count }}
               </span>
@@ -48,7 +51,7 @@
                 >
                   <div class="vcard">
                     <img
-                      :src="'/src/assets/images/person_1.jpg'"
+                      src="/assets/images/person_1.jpg"
                       alt="Image placeholder"
                     />
                   </div>
@@ -194,6 +197,7 @@
             <h2 class="mb-3 ">Related Post</h2>
           </div>
         </div>
+
         <div class="row">
           <div
             class="col-md-6 col-lg-4"
@@ -294,7 +298,7 @@ export default {
           )
           .then(data => {
             this.$store.commit("loading", false);
-            alert(data.msg);
+            alert(data.message);
             location.reload();
           });
       } else {

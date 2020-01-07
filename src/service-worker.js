@@ -30,15 +30,13 @@ if (workbox) {
   );
   self.addEventListener("push", event => {
     var msg = event.data.json();
-    console.log(msg);
     event.waitUntil(self.registration.showNotification(msg.title, {
       body: msg.body,
       icon: msg.icon,
       actions: msg.actions}));
   
-  self.addEventListener('notificationclick', function(event) {  
-    event.notification.close();    
-    if (event.action)
+  self.addEventListener('notificationclick', function(event) {
+  if (event.action == "View")
     {
       clients.openWindow("http://vue.article.com");  
     }  

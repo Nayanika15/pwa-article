@@ -4,10 +4,10 @@
       <div class="container">
         <div class="row">
           <div class="col-9 social">
-            <router-link to="login" v-if="!isAuthenticated">Login</router-link>
-            <router-link to="register">Register</router-link>
-            <a @click="loggout" v-if="isAuthenticated"> loggout</a>
-            <button v-on:click="AuthProvider('google')" v-if="!isAuthenticated">
+            <router-link to="login" v-if="!token">Login</router-link>
+            <router-link to="register" v-if="!token">Register</router-link>
+            <a @click="loggout" v-if="token"> loggout</a>
+            <button v-on:click="AuthProvider('google')" v-if="token">
               <span class="fa fa-google"></span>
             </button>
           </div>
@@ -39,6 +39,7 @@
             <li class="nav-item">
               <router-link class="nav-link" to="/">Home</router-link>
             </li>
+
             <li class="nav-item dropdown" v-if="categories_count">
               <a
                 class="nav-link dropdown-toggle"
@@ -65,11 +66,12 @@
             </li>
             <li class="nav-item">
               <router-link class="nav-link" to="/contact"
-                >Contact Us</router-link
+                >Contact Us </router-link
               >
             </li>
-            <li class="nav-item dropdown" v-if="isAuthenticated">
+            <li class="nav-item dropdown" v-if="token">
               <a
+                v-if="is_admin"
                 class="nav-link dropdown-toggle"
                 id="dropdown05"
                 data-toggle="dropdown"
@@ -78,9 +80,26 @@
               >
                 Admin
               </a>
+              <a
+                v-else
+                class="nav-link dropdown-toggle"
+                id="dropdown05"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                User
+              </a>
               <div class="dropdown-menu" aria-labelledby="dropdown05">
                 <router-link
-                  v-if="isAdmin"
+                  v-if="is_admin"
+                  class="dropdown-item"
+                  :to="{ name: 'dashboard' }"
+                >
+                  Dashboard
+                </router-link>
+                <router-link
+                  v-if="is_admin"
                   class="dropdown-item"
                   :to="{ name: 'view-category' }"
                 >
@@ -93,7 +112,7 @@
                   Articles
                 </router-link>
                 <router-link
-                  v-if="isAdmin"
+                  v-if="is_admin"
                   class="dropdown-item"
                   :to="{ name: 'view-comments' }"
                 >
@@ -108,6 +127,7 @@
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
   data() {
     return {
@@ -117,6 +137,10 @@ export default {
     };
   },
   computed: {
+    ...mapState({
+      token: state => state.auth.token,
+      is_admin: state => state.auth.is_admin
+    }),
     isAuthenticated() {
       return this.$store.state.token;
     },

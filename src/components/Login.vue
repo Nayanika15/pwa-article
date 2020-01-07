@@ -96,11 +96,13 @@ export default {
             this.$store.commit("loading", false);
             const result = data["result"];
 
-            if (result.token) {
+            if(result.token) {
               this.$store.dispatch("user_auth", {
                 token: result.token,
                 is_admin: result.isAdmin
               });
+              localStorage.token = result.token;
+              localStorage.is_admin = result.isAdmin;
             } else {
               this.loginFailed();
               return;
@@ -110,16 +112,27 @@ export default {
             this.$router.replace({ name: "dashboard" });
             location.reload();
           })
-          .catch(() => {
-            alert("You are not authorised.");
+          .catch((error) => {
+            this.$store.commit("loading", false);
+            console.log(error);
+            alert('Login failed');
           });
       } else {
         return false;
       }
     },
     loginFailed() {
+      this.$store.commit("loading", false);
       this.error = "Login failed!";
       delete localStorage.token;
+    },
+    
+  },
+  created() {
+    if((this.$store.state.auth.token))
+    {
+      this.$router.replace({ name: "dashboard" });
+      location.reload();
     }
   }
 };
