@@ -63,16 +63,22 @@
                 </div>
                 <div class="col-md-12 form-group">
                   <label for="details">Details</label>
-                  <ValidationProvider
+                  <div>
+                    <ValidationProvider
                     name="details"
                     rules="required"
                     v-slot="{ errors }"
                   >
-                    <editor-content
-                      :editor="editor"
-                      v-model="article.details"
-                    />
+                    <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
+                        <button :class="{ 'is-active': isActive.bold() }" @click="commands.bold">
+                          <i class="fa fa-bold" aria-hidden="true"></i>
+                        </button>
+                    </editor-menu-bar>
+                    <editor-content 
+                    class="form-control"
+                    :editor="editor" />
                   </ValidationProvider>
+                </div>
                 </div>
                 <div class="col-md-12 form-group">
                   <label for="image">Image</label>
@@ -106,7 +112,8 @@
 
 <script>
 import { ValidationProvider, ValidationObserver } from "vee-validate";
-import { EditorContent } from "tiptap";
+import { Editor, EditorContent, EditorMenuBar } from 'tiptap';
+import { Blockquote, CodeBlock, HardBreak, Heading, OrderedList, BulletList, ListItem, TodoItem, TodoList, Bold, Code, Italic, Link, Strike, Underline, History } from 'tiptap-extensions';
 
 export default {
   data() {
@@ -116,17 +123,38 @@ export default {
         details: "",
         categories: [],
         image: "",
-        status: ""
+        status: "",
       },
       status: "",
       submitted: false,
       categories: "",
-      categories_count: 0
-    };
+      categories_count: 0,
+      editor: new Editor({
+        extensions: [
+          new Blockquote(),
+          new CodeBlock(),
+          new HardBreak(),
+          new Heading({ levels: [1, 2, 3] }),
+          new BulletList(),
+          new OrderedList(),
+          new ListItem(),
+          new TodoItem(),
+          new TodoList(),
+          new Bold(),
+          new Code(),
+          new Italic(),
+          new Link(),
+          new Strike(),
+          new Underline(),
+          new History(),
+        ]
+      })
+    }
   },
   components: {
     ValidationProvider,
     ValidationObserver,
+    EditorMenuBar,
     EditorContent
   },
   methods: {

@@ -67,6 +67,7 @@ export default {
               alert(data.msg);
             }
             this.$router.replace({ name: result.route });
+            location.reload();
           });
       });
     }

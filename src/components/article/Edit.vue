@@ -66,7 +66,17 @@
                     rules="required"
                     v-slot="{ errors }"
                   >
-                    <editor :editor="editor" v-model="article.details"></editor>
+                    <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
+                      <button :class="{ 'is-active': isActive.bold() }" @click="commands.bold">
+                        <i class="fa fa-bold" aria-hidden="true"></i>
+                      </button>
+                    </editor-menu-bar>
+                      <v-flex>
+                        <editor-content
+                        class="editor__content"
+                        :editor="editor"
+                        v-model="article.details" />
+                      </v-flex>
                   </ValidationProvider>
                 </div>
                 <div class="col-md-12 form-group">
@@ -76,14 +86,15 @@
                     rules="image"
                     v-slot="{ errors }"
                   >
-                    <input type="file" class="form-control" />
+                    <input type="file" class="form-control" ref="article.image"/>
+                    <img :src="article.image" alt="Image placeholder" height="300" width="300"/>
                   </ValidationProvider>
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-md-6 form-group">
-                  <input class="btn btn-primary" type="submit" value="Add" />
+                  <input class="btn btn-primary" type="submit" value="Update" />
                 </div>
                 <span v-show="errors">
                   <ul v-for="(error, id) in errors" :key="id">
@@ -101,6 +112,8 @@
 
 <script>
 import { ValidationProvider, ValidationObserver } from "vee-validate";
+import { Editor, EditorContent, EditorMenuBar } from 'tiptap';
+import { Blockquote, CodeBlock, HardBreak, Heading, OrderedList, BulletList, ListItem, TodoItem, TodoList, Bold, Code, Italic, Link, Strike, Underline, History } from 'tiptap-extensions';
 
 export default {
   data() {
@@ -115,25 +128,36 @@ export default {
       status: "",
       submitted: false,
       categories: [],
-      categories_count: 0
+      categories_count: 0,
+      editor:new Editor({
+      extensions: [
+          new Blockquote(),
+          new CodeBlock(),
+          new HardBreak(),
+          new Heading({ levels: [1, 2, 3] }),
+          new BulletList(),
+          new OrderedList(),
+          new ListItem(),
+          new TodoItem(),
+          new TodoList(),
+          new Bold(),
+          new Code(),
+          new Italic(),
+          new Link(),
+          new Strike(),
+          new Underline(),
+          new History(),
+        ]
+    })
     };
   },
   components: {
+    EditorMenuBar,
+    EditorContent,
     ValidationProvider,
     ValidationObserver
   },
   methods: {
-    fetchActiveCategories() {
-      this.$http
-        .get("category/active")
-        .then(response => {
-          return response.json();
-        })
-        .then(data => {
-          this.categories = data;
-          this.categories_count = data.length;
-        });
-    },
     async submit() {
       const valid = await this.$refs.observer.validate();
       if (valid) {
@@ -152,6 +176,7 @@ export default {
                 });
                 location.reload();
               } else {
+                alert(result.msg);
                 this.$router.replace({ name: "view-articles" });
                 location.reload();
               }
@@ -164,29 +189,34 @@ export default {
     }
   },
   created() {
-    this.fetchActiveCategories();
     this.$store.commit("loading", true);
     this.$http
-      .get("article/edit/" + this.$route.params.id)
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        this.$store.commit("loading", false);
-        let error = data.errFlag;
-        if (error == 1) {
-          alert("Article was not found");
-          this.$router.replace({ name: "view-articles" });
-          location.reload();
-        } else if (error == 2) {
-          alert("You are not authorised for this action.");
-          this.$router.replace({ name: "view-articles" });
-          location.reload();
-        } else {
-          this.article = data.result;
-          this.article.categories = data.result.categories_tagged;
-        }
-      });
+    .get("article/edit/" + this.$route.params.id)
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      this.$store.commit("loading", false);
+      let error = data.errFlag;
+      if (error == 1) {
+        alert("Article was not found");
+        this.$router.replace({ name: "view-articles" });
+        location.reload();
+      } else if (error == 2) {
+        alert("You are not authorised for this action.");
+        this.$router.replace({ name: "view-articles" });
+        location.reload();
+      } else {
+        this.article.title = data.result.title;
+        this.article.details = data.result.details;
+        this.article.categories = data.result.categories_tagged;
+        this.article.image = data.result.detail_image;
+        this.article.status = data.result.approve_status;
+        this.categories = data.result.all_categories;
+        this.categories_count = this.categories.length;
+      }
+      this.editor.setContent(this.article.details);
+    });
   }
 };
 </script>
