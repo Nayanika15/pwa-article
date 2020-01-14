@@ -71,7 +71,7 @@
             </li>
             <li class="nav-item dropdown" v-if="token">
               <a
-                v-if="is_admin"
+                v-if="isAdmin"
                 class="nav-link dropdown-toggle"
                 id="dropdown05"
                 data-toggle="dropdown"
@@ -92,14 +92,13 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="dropdown05">
                 <router-link
-                  v-if="is_admin"
                   class="dropdown-item"
                   :to="{ name: 'dashboard' }"
                 >
                   Dashboard
                 </router-link>
                 <router-link
-                  v-if="is_admin"
+                  v-if="isAdmin"
                   class="dropdown-item"
                   :to="{ name: 'view-category' }"
                 >
@@ -112,7 +111,7 @@
                   Articles
                 </router-link>
                 <router-link
-                  v-if="is_admin"
+                  v-if="isAdmin"
                   class="dropdown-item"
                   :to="{ name: 'view-comments' }"
                 >
@@ -138,14 +137,16 @@ export default {
   },
   computed: {
     ...mapState({
-      token: state => state.auth.token,
-      is_admin: state => state.auth.is_admin
+      token: state => state.auth.token
     }),
     isAuthenticated() {
       return this.$store.state.token;
     },
     isAdmin() {
-      return this.$store.state.is_admin;
+      if(this.$store.state.auth.is_admin == 1)
+        return 1;
+      else
+        return 0;
     }
   },
   created() {
