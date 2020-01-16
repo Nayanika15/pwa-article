@@ -101,8 +101,6 @@ export default {
                 token: result.token,
                 is_admin: result.isAdmin
               });
-              localStorage.token = result.token;
-              localStorage.is_admin = result.isAdmin;
             } else {
               this.loginFailed();
               return;
@@ -122,7 +120,7 @@ export default {
       }
     },
     loginFailed() {
-      this.$store.commit("loading", false);
+      // this.$store.commit("loading", false);
       this.error = "Login failed!";
       delete localStorage.token;
     },

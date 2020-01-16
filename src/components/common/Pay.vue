@@ -47,6 +47,10 @@ export default {
     Card
   },
   mounted() {
+  //adding script tag for stripe payment
+    let stripeScript = document.createElement('script')
+    stripeScript.setAttribute('src', 'https://js.stripe.com/v3/')
+    document.head.appendChild(stripeScript)
     setTimeout(() => {
       this.showStripeForm = true;
     }, 1000);
@@ -63,10 +67,8 @@ export default {
             return response.json();
           })
           .then(data => {
-            if (data.msg != "success") {
-              alert(data.msg);
-            }
-            this.$router.replace({ name: result.route });
+            alert(data.msg);
+            this.$router.replace({ name: data.route });
             location.reload();
           });
       });

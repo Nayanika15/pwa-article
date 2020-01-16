@@ -5,7 +5,7 @@
         <div class="row mb-4">
           <div class="col-md-6">
             <h1 class="mb-4">
-              Add Category
+              All Categories
               <small>
                 <router-link
                   :to="{ name: 'add-category' }"
@@ -22,7 +22,7 @@
               :headers="headers"
               :items="categories"
               :search="search"
-              loading
+              :loading="loading"
               loading-text="Loading... Please wait"
             >
               <template v-slot:item.action="{ item }">
@@ -54,7 +54,8 @@ export default {
         { text: "Name", value: "name" },
         { text: "Action", value: "action" }
       ],
-      categories: []
+      categories: [],
+      loading:true
     };
   },
   methods: {
@@ -84,6 +85,7 @@ export default {
       })
       .then(data => {
         this.$store.commit("loading", false);
+        this.loading = false;
         this.categories = data["data"];
       });
   }

@@ -276,6 +276,12 @@ export default {
         })
         .then(data => {
           this.$store.commit("loading", false);
+          if(data.message == "error")
+          {
+            alert('Article was not found.');
+            this.$router.replace({ name: "home" });
+            location.reload();
+          }
           const result = data["result"];
           this.article = result["article"];
           this.active_comments = result["active_comments"];

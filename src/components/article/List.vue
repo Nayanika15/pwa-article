@@ -22,7 +22,7 @@
               :headers="headers"
               :items="articles"
               :search="search"
-              loading
+              :loading="loading"
               loading-text="Loading... Please wait"
             >
               <template v-slot:item.paid_status="{ item }">
@@ -81,7 +81,8 @@ export default {
         { text: "Created On", value: "date" },
         { text: "Action", value: "action" }
       ],
-      articles: []
+      articles: [],
+      loading:true
     };
   },
   created() {
@@ -93,6 +94,7 @@ export default {
       })
       .then(data => {
         this.$store.commit("loading", false);
+        this.loading= false;
         this.articles = data;
       });
   },

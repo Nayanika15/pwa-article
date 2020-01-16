@@ -96,7 +96,7 @@
                 <div class="col-md-6 form-group">
                   <input class="btn btn-primary" type="submit" value="Add" />
                 </div>
-                <span v-show="errors">
+                <span class="error" v-show="errors">
                   <ul v-for="(error, id) in errors" :key="id">
                     <li v-for="(err, i) in error" :key="i">{{ err }}</li>
                   </ul>

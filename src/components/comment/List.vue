@@ -10,7 +10,7 @@
               :items="comments"
               :items-per-page="5"
               :search="search"
-              loading
+              :loading="loading"
               loading-text="Loading... Please wait"
             >
               <template v-slot:item.approve_status="{ item }">
@@ -51,7 +51,8 @@ export default {
         { text: "Status", value: "approve_status" },
         { text: "Action", value: "action" }
       ],
-      comments: []
+      comments: [],
+      loading: true
     };
   },
   methods: {
@@ -75,6 +76,7 @@ export default {
     this.$http
       .get("comment/list")
       .then(response => {
+        this.loading= false;
         return response.json();
       })
       .then(data => {

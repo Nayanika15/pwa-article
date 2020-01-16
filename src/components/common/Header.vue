@@ -7,9 +7,7 @@
             <router-link to="login" v-if="!token">Login</router-link>
             <router-link to="register" v-if="!token">Register</router-link>
             <a @click="loggout" v-if="token"> loggout</a>
-            <button v-on:click="AuthProvider('google')" v-if="token">
               <span class="fa fa-google"></span>
-            </button>
           </div>
         </div>
       </div>
@@ -102,7 +100,7 @@
                   class="dropdown-item"
                   :to="{ name: 'view-category' }"
                 >
-                  Category
+                  Categories
                 </router-link>
                 <router-link
                   class="dropdown-item"
@@ -166,32 +164,8 @@ export default {
     },
     loggout() {
       delete localStorage.token;
-      //this.$router.redirect({ name: "Home"});
       this.$router.replace({ name: "home" });
       location.reload();
-    },
-    AuthProvider(provider) {
-      this.$auth
-        .authenticate(provider)
-        .then(response => {
-          this.SocialLogin(response);
-        })
-        .catch(err => {
-          console.log({ err: err });
-        });
-    },
-    SocialLogin(response) {
-      this.$http
-        .post("sociallogin/google", response)
-        .then(response => {
-          console.log(response);
-        })
-        // .then(data => {
-        //     console.log(data);
-        // })
-        .catch(err => {
-          console.log({ err: err });
-        });
     }
   }
 };

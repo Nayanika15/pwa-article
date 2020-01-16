@@ -32,7 +32,7 @@
                     />
                     <button
                       class="btn btn-warning btn-sm input-group-btn"
-                      @click="verify"
+                      @click="sendCode"
                       type="button"
                     >
                       Send code
@@ -97,7 +97,7 @@
                 <input type="submit" value="Submit" class="btn btn-primary" />
               </div>
             </div>
-            <span v-show="errors">
+            <span v-show="errors" class="errors">
               <ul v-for="(error, id) in errors" :key="id">
                 <li v-for="(err, i) in error" :key="i">{{ err }}</li>
               </ul>
@@ -145,19 +145,21 @@ export default {
             response => {
               return response.json();
             },
-            error => alert(error)
           )
           .then(data => {
             this.$store.commit("loading", false);
             alert(data.msg);
             this.$router.replace({ name: data.route });
-            location.reload();
+          })
+          .catch((error) => {
+            this.$store.commit("loading", false);
+            alert(error.msg);
           });
       } else {
         return false;
       }
     },
-    verify() {
+    sendCode() {
       if (this.user.mobile) {
         this.$http
           .get("verify-mobile/" + this.user.mobile)

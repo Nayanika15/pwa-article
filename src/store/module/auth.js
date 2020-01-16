@@ -5,12 +5,8 @@ const state = {
 
 const mutations = {
   authenicated(state, { token, is_admin }) {
-    if (token) {
       localStorage.token = token;
-    }
-    if (is_admin) {
       localStorage.is_admin = is_admin;
-    }
   }
 };
 
