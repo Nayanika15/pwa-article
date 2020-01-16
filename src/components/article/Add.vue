@@ -67,6 +67,7 @@
                     <ValidationProvider
                     name="details"
                     rules="required"
+                    v-model="article.details"
                     v-slot="{ errors }"
                   >
                     <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">

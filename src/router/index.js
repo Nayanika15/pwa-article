@@ -16,6 +16,7 @@ import UpdateCategory from "@/components/category/Edit.vue";
 import EditArticle from "@/components/article/Edit.vue";
 import ForgotPassword from "@/components/common/PasswordReset.vue";
 import Comment from "@/components/comment/List.vue";
+import Loggout from "@/components/Loggout.vue";
 
 export const routes = [
   {
@@ -57,7 +58,18 @@ export const routes = [
     component: CategoryDetail,
     name: "categoryDetail"
   },
-  { path: "/login", component: Login, name: "login", meta: { guest: true } },
+  { 
+    path: "/login", 
+    component: Login,
+    name: "login",
+     meta: { guest: true } 
+  },
+  { 
+    path: "/loggout", 
+    component: Loggout,
+    name: "loggout",
+     meta: { auth: true } 
+  },
   { path: "/register", component: Register, name: "register", meta: { guest: true } },
   {
     path: "/dashboard",

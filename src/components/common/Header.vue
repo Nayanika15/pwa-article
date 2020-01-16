@@ -163,9 +163,7 @@ export default {
         });
     },
     loggout() {
-      delete localStorage.token;
-      this.$router.replace({ name: "home" });
-      location.reload();
+      this.$router.replace({ name: "loggout" });
     }
   }
 };

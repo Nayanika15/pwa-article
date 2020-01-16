@@ -122,7 +122,6 @@ export default {
     loginFailed() {
       // this.$store.commit("loading", false);
       this.error = "Login failed!";
-      delete localStorage.token;
     },
     
   },
