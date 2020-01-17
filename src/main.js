@@ -3,7 +3,9 @@ import "babel-polyfill";
 import VueRouter from "vue-router";
 import VueResource from "vue-resource";
 import App from "./App";
-import { routes } from "./router";
+import {
+	routes
+} from "./router";
 import "../public/assets/js/validatorFile";
 //import VueSocialauth from "vue-social-auth";
 import DataTable from "laravel-vue-datatable";
@@ -22,32 +24,36 @@ Vue.http.options.root = "http://article.com/api/";
 Vue.config.productionTip = false;
 
 const router = new VueRouter({
-  routes,
-  mode: 'history',
-  renderSingle: true
+	routes,
+	mode: 'history',
+	renderSingle: true
 });
 
 router.beforeEach((to, from, next) => {
-      Vue.http.interceptors.push((request, next) => {
-        request.headers.set(
-          "Authorization",
-          "Bearer " + store.state.auth.token
-        );
-        request.headers.set("Accept", "application/json");
-        return next();
-      });
-    return next();
-  });
+	Vue.http.interceptors.push((request, next) => {
+		if (store.state.auth.token) {
+			request.headers.set(
+				"Authorization",
+				"Bearer " + store.state.auth.token
+			);
+			request.headers.set("Accept", "application/json");
+		}
+		return next();
+	});
+	return next();
+});
 
 new Vue({
-  el: "#app",
-  store,
-  router,
-  vuetify: new Vuetify({
-    icons: {
-      iconfont: "mdi"
-    }
-  }),
-  render: h => h(App),
-  components: { App }
+	el: "#app",
+	store,
+	router,
+	vuetify: new Vuetify({
+		icons: {
+			iconfont: "mdi"
+		}
+	}),
+	render: h => h(App),
+	components: {
+		App
+	}
 }).$mount("#app");

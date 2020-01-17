@@ -1381,3 +1381,10 @@ blockquote {
     border-color: #ced4da;
     color: #5b6c7b;
 }
+.stripe-card {
+	width: 300px;
+	border: 1px solid grey;
+}
+.stripe-card.complete {
+	border-color: green;
+}
