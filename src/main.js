@@ -20,9 +20,9 @@ Vue.use(DataTable);
 
 Vue.use(VueRouter);
 Vue.use(VueResource);
-Vue.http.options.root = "http://article.com/api/";
+const url = "/api"
+Vue.http.options.root = url;
 Vue.config.productionTip = false;
-
 const router = new VueRouter({
 	routes,
 	mode: 'history',
